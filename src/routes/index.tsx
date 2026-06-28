@@ -109,54 +109,6 @@ function Home() {
         </GoldFrame>
       </motion.div>
 
-      {/* GTech AI login ID — opens the official Telegram bot */}
-      <GoldFrame className="p-4">
-        <div className="flex items-center gap-2">
-          <Bot className="h-4 w-4 text-gold" />
-          <h3 className="font-display font-semibold text-gold-soft">GTech AI Login ID</h3>
-        </div>
-        {user.username ? (
-          <>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Use this ID to sign in to GTech AI on Telegram.
-            </p>
-            <a
-              href="https://t.me/GtechAI_Bot"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 flex items-center justify-between rounded-md border border-gold-soft/40 bg-black/40 px-3 py-2 transition hover:border-gold hover:bg-black/60"
-            >
-              <div className="min-w-0">
-                <p className="truncate text-sm font-bold text-gold-soft">@{user.username}</p>
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                  Open @GtechAI_Bot
-                </p>
-              </div>
-              <span className="ml-3 flex-shrink-0 rounded bg-gradient-gold-flat px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-primary-foreground">
-                GTech AI
-              </span>
-            </a>
-          </>
-        ) : (
-          <div className="mt-2 space-y-2">
-            <div className="flex items-start gap-2 rounded-md border border-gold-soft/40 bg-black/40 p-2 text-xs text-muted-foreground">
-              <AlertCircle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-gold" />
-              <span>
-                You don't have a Telegram username yet. Please create one in Telegram
-                (Settings → Username) to use GTech AI.
-              </span>
-            </div>
-            <a
-              href="https://t.me/GtechAI_Bot"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full rounded-md border border-gold-soft/40 bg-black/40 px-3 py-2 text-center text-[10px] font-bold uppercase tracking-widest text-gold-soft hover:border-gold hover:bg-black/60"
-            >
-              Open @GtechAI_Bot
-            </a>
-          </div>
-        )}
-      </GoldFrame>
 
       {/* Announcements */}
       {announcements.length > 0 && (
