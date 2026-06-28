@@ -9,38 +9,234 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as TrialRouteImport } from './routes/trial'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as GameRouteImport } from './routes/game'
+import { Route as FlappyClassicRouteImport } from './routes/flappy-classic'
+import { Route as DevRouteImport } from './routes/dev'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminSecretsRouteImport } from './routes/admin.secrets'
+import { Route as AdminLevelIdRouteImport } from './routes/admin.level.$id'
+import { Route as AdminDepositsStatusRouteImport } from './routes/admin.deposits.$status'
 
+const WalletRoute = WalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrialRoute = TrialRouteImport.update({
+  id: '/trial',
+  path: '/trial',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderboardRoute = LeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GameRoute = GameRouteImport.update({
+  id: '/game',
+  path: '/game',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlappyClassicRoute = FlappyClassicRouteImport.update({
+  id: '/flappy-classic',
+  path: '/flappy-classic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevRoute = DevRouteImport.update({
+  id: '/dev',
+  path: '/dev',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSecretsRoute = AdminSecretsRouteImport.update({
+  id: '/admin/secrets',
+  path: '/admin/secrets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLevelIdRoute = AdminLevelIdRouteImport.update({
+  id: '/admin/level/$id',
+  path: '/admin/level/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDepositsStatusRoute = AdminDepositsStatusRouteImport.update({
+  id: '/admin/deposits/$status',
+  path: '/admin/deposits/$status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dev': typeof DevRoute
+  '/flappy-classic': typeof FlappyClassicRoute
+  '/game': typeof GameRoute
+  '/leaderboard': typeof LeaderboardRoute
+  '/trial': typeof TrialRoute
+  '/wallet': typeof WalletRoute
+  '/admin/secrets': typeof AdminSecretsRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/deposits/$status': typeof AdminDepositsStatusRoute
+  '/admin/level/$id': typeof AdminLevelIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dev': typeof DevRoute
+  '/flappy-classic': typeof FlappyClassicRoute
+  '/game': typeof GameRoute
+  '/leaderboard': typeof LeaderboardRoute
+  '/trial': typeof TrialRoute
+  '/wallet': typeof WalletRoute
+  '/admin/secrets': typeof AdminSecretsRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/deposits/$status': typeof AdminDepositsStatusRoute
+  '/admin/level/$id': typeof AdminLevelIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dev': typeof DevRoute
+  '/flappy-classic': typeof FlappyClassicRoute
+  '/game': typeof GameRoute
+  '/leaderboard': typeof LeaderboardRoute
+  '/trial': typeof TrialRoute
+  '/wallet': typeof WalletRoute
+  '/admin/secrets': typeof AdminSecretsRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/deposits/$status': typeof AdminDepositsStatusRoute
+  '/admin/level/$id': typeof AdminLevelIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dev'
+    | '/flappy-classic'
+    | '/game'
+    | '/leaderboard'
+    | '/trial'
+    | '/wallet'
+    | '/admin/secrets'
+    | '/admin/'
+    | '/admin/deposits/$status'
+    | '/admin/level/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/dev'
+    | '/flappy-classic'
+    | '/game'
+    | '/leaderboard'
+    | '/trial'
+    | '/wallet'
+    | '/admin/secrets'
+    | '/admin'
+    | '/admin/deposits/$status'
+    | '/admin/level/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/dev'
+    | '/flappy-classic'
+    | '/game'
+    | '/leaderboard'
+    | '/trial'
+    | '/wallet'
+    | '/admin/secrets'
+    | '/admin/'
+    | '/admin/deposits/$status'
+    | '/admin/level/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  DevRoute: typeof DevRoute
+  FlappyClassicRoute: typeof FlappyClassicRoute
+  GameRoute: typeof GameRoute
+  LeaderboardRoute: typeof LeaderboardRoute
+  TrialRoute: typeof TrialRoute
+  WalletRoute: typeof WalletRoute
+  AdminSecretsRoute: typeof AdminSecretsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminDepositsStatusRoute: typeof AdminDepositsStatusRoute
+  AdminLevelIdRoute: typeof AdminLevelIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wallet': {
+      id: '/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trial': {
+      id: '/trial'
+      path: '/trial'
+      fullPath: '/trial'
+      preLoaderRoute: typeof TrialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/game': {
+      id: '/game'
+      path: '/game'
+      fullPath: '/game'
+      preLoaderRoute: typeof GameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flappy-classic': {
+      id: '/flappy-classic'
+      path: '/flappy-classic'
+      fullPath: '/flappy-classic'
+      preLoaderRoute: typeof FlappyClassicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev': {
+      id: '/dev'
+      path: '/dev'
+      fullPath: '/dev'
+      preLoaderRoute: typeof DevRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +244,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/secrets': {
+      id: '/admin/secrets'
+      path: '/admin/secrets'
+      fullPath: '/admin/secrets'
+      preLoaderRoute: typeof AdminSecretsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/level/$id': {
+      id: '/admin/level/$id'
+      path: '/admin/level/$id'
+      fullPath: '/admin/level/$id'
+      preLoaderRoute: typeof AdminLevelIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/deposits/$status': {
+      id: '/admin/deposits/$status'
+      path: '/admin/deposits/$status'
+      fullPath: '/admin/deposits/$status'
+      preLoaderRoute: typeof AdminDepositsStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  DevRoute: DevRoute,
+  FlappyClassicRoute: FlappyClassicRoute,
+  GameRoute: GameRoute,
+  LeaderboardRoute: LeaderboardRoute,
+  TrialRoute: TrialRoute,
+  WalletRoute: WalletRoute,
+  AdminSecretsRoute: AdminSecretsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminDepositsStatusRoute: AdminDepositsStatusRoute,
+  AdminLevelIdRoute: AdminLevelIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
