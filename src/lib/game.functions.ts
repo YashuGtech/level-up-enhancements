@@ -504,7 +504,9 @@ export const finishGame = createServerFn({ method: "POST" })
     if (credited > remainingTotalCap) credited = remainingTotalCap;
 
     const newBal = Number(latest?.balance_gtc ?? 0) + credited;
-    const newLevel = Math.min(settings.cap, oldLevel + 1);
+    // Allow current_level to advance to cap+1 (e.g. 101) so the client can
+    // detect "all 100 levels completed" and show the congrats screen.
+    const newLevel = Math.min(settings.cap + 1, oldLevel + 1);
     const completedCount = Number(latest?.levels_completed ?? 0) + 1;
 
     const newBonusRevives = Number(latest?.bonus_free_revives ?? 0) + settings.bonusRevivesPerWin;
