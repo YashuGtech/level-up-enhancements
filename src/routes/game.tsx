@@ -499,12 +499,11 @@ function StartScreen({
   const [skipping, setSkipping] = useState(false);
 
   // Show congratulations + wait-for-withdrawal screen instead of Play button
-  // when the player has fully completed all 100 levels OR has reached the
-  // 100,000 GTC earning milestone.
+  // once the player has completed all 100 levels. Earning balance does NOT
+  // block play — players can keep playing until level 100 is finished.
   const completedAllLevels = currentLevel > 100;
-  const reachedEarningCap = balance >= 100000;
 
-  if (completedAllLevels || reachedEarningCap) {
+  if (completedAllLevels) {
     return (
       <div className="relative flex min-h-[calc(100dvh-80px)] flex-col items-center justify-center overflow-hidden p-6">
         <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-display text-[260px] font-black text-gold/[0.04] select-none">
@@ -517,19 +516,13 @@ function StartScreen({
           className="relative z-10 w-full max-w-sm"
         >
           <GoldFrame glow className="p-6 text-center space-y-4">
-            <div className="text-6xl">{reachedEarningCap ? "💰" : "👑"}</div>
+            <div className="text-6xl">👑</div>
             <h1 className="font-display text-3xl text-gradient-gold tracking-wider">
               Congratulations!
             </h1>
-            {completedAllLevels ? (
-              <p className="text-sm text-gold-soft">
-                You have completed all 100 levels. Thank you for playing!
-              </p>
-            ) : (
-              <p className="text-sm text-gold-soft">
-                You have reached the moment of earning — 100,000 GTC! Thanks for being with us.
-              </p>
-            )}
+            <p className="text-sm text-gold-soft">
+              You have completed all 100 levels. Thanks for playing!
+            </p>
             <div className="rounded-lg border border-gold-soft/40 bg-black/40 p-3 text-xs text-muted-foreground">
               Please wait for the withdrawal announcement. We will notify you
               once withdrawals are available.
@@ -542,6 +535,7 @@ function StartScreen({
       </div>
     );
   }
+
 
   return (
     <div className="relative flex min-h-[calc(100dvh-80px)] flex-col items-center justify-center overflow-hidden p-6">
