@@ -39,6 +39,8 @@ async function request<T>(
         ...(rest.headers ?? {}),
       },
     });
+    // Clone first so we can always re-read the raw body for logging.
+    const rawText = await res.clone().text();
     const text = await res.text();
     let body: unknown = null;
     try {
@@ -47,6 +49,9 @@ async function request<T>(
       body = text;
     }
     if (!res.ok) {
+      // Surface the raw server response so failures are visible in
+      // the browser console, not just a generic toast.
+      console.error(`[api ${res.status}] ${rest.method ?? "GET"} ${url} →`, rawText);
       const message =
         (body && typeof body === "object" && "message" in body && typeof (body as { message: unknown }).message === "string"
           ? (body as { message: string }).message

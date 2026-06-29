@@ -136,15 +136,34 @@ export const startGame = createServerFn({ method: "POST" })
       pipe_gap: number; bg_color: string | null; repeat_loop: boolean;
       reward_per_coin: number | string; enabled: boolean;
     };
+    // Look up the dev-built level for this index. Use a tolerant query
+    // (limit 1, order by enabled desc) so a duplicate row or a stray
+    // disabled row never blocks players — we always pick the enabled
+    // one when it exists. Any DB error is logged with full detail.
     const customRes = await (supabaseAdmin.from("levels") as unknown as {
-      select: (s: string) => { eq: (c: string, v: unknown) => { maybeSingle: () => Promise<{ data: CustomLvl | null }> } };
+      select: (s: string) => {
+        eq: (c: string, v: unknown) => {
+          order: (c: string, o: { ascending: boolean }) => {
+            limit: (n: number) => Promise<{ data: CustomLvl[] | null; error: unknown }>;
+          };
+        };
+      };
     })
       .select("id, name, gravity, jump_strength, scroll_speed, pipe_gap, bg_color, repeat_loop, reward_per_coin, enabled")
       .eq("level_index", levelIndex)
-      .maybeSingle();
-    const customLvl = customRes.data && customRes.data.enabled ? customRes.data : null;
+      .order("enabled", { ascending: false })
+      .limit(1);
+    if (customRes.error) {
+      console.error(`[startGame] level_index=${levelIndex} lookup error:`, customRes.error);
+    }
+    const customLvl =
+      (customRes.data ?? []).find((r) => r.enabled) ?? null;
 
     if (!customLvl) {
+      console.error(
+        `[startGame] No enabled level for level_index=${levelIndex}. Rows returned:`,
+        customRes.data,
+      );
       throw new Error(
         `Level ${levelIndex} is being prepared by the dev team and isn't available yet. Please check back soon!`,
       );

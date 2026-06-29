@@ -139,6 +139,9 @@ function GameInner() {
       }, 700);
     },
     onError: (e) => {
+      // Surface the real failure (server message + stack) in the console
+      // so we can diagnose blocks like "Level 100 not available".
+      console.error("[startGame] failed:", e);
       toast.error(e instanceof Error ? e.message : "Could not start");
       setStage({ kind: "idle" });
     },
