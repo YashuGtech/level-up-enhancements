@@ -117,6 +117,9 @@ function AdminPanel() {
         <div>
           <p className="text-[10px] uppercase tracking-widest text-gold">Admin</p>
           <h1 className="font-display text-2xl text-gradient-gold">Admin Panel</h1>
+          <p className="mt-1 text-[10px] font-mono text-gold-soft/70">
+            Build: v2026.06.29-lvl100-fix
+          </p>
         </div>
       </div>
 
