@@ -95,6 +95,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // Telegram Login bot domain is registered as the apex `gtcflappygame.com`.
+  // When users land on `www.gtcflappygame.com` the widget throws
+  // "Invalid domain". Transparently redirect www → apex (preserving path
+  // and query) so /game and every other route work on both hostnames.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hostname === "www.gtcflappygame.com") {
+      window.location.replace(
+        "https://gtcflappygame.com" + window.location.pathname + window.location.search + window.location.hash,
+      );
+    }
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
@@ -104,3 +116,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
