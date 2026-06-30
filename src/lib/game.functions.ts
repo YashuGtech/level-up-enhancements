@@ -490,27 +490,16 @@ export const finishGame = createServerFn({ method: "POST" })
       latest?.current_level ?? (user as unknown as { current_level?: number }).current_level ?? 1,
     );
     const milestone = oldLevel === 50 || oldLevel === 100 ? MILESTONE_BONUS : 0;
-    // ── HARD EARNINGS CAPS ─────────────────────────────────────────────
-    // Players earn EXACTLY 200 GTC per level + milestone bonuses (5k at
-    // level 50, 5k at level 100). Coins are cosmetic. Lifetime gameplay
-    // earnings are capped at 30,000 GTC. Total lifetime earnings
-    // (gameplay + referral) are capped at 100,000 GTC.
-    const LIFETIME_GAME_CAP = 30000;
+    // ── EARNINGS RULES ─────────────────────────────────────────────────
+    // Players earn EXACTLY 200 GTC per level + milestone bonuses
+    // (5,000 GTC at level 50 and 5,000 GTC at level 100). Coins are
+    // cosmetic. Total lifetime earnings (gameplay + referral) are
+    // capped at 100,000 GTC.
     const LIFETIME_TOTAL_CAP = 100000;
     const basePrize = LEVEL_FLAT_REWARD_DEFAULT;
     const totalCoins = data.coinsCollected + settings.levelCoinBonus;
     void settings.coinValueGtc; // retained for backward compat; coins are cosmetic
     let credited = basePrize + milestone;
-
-    // Sum prior earnings.
-    const { data: priorGame } = await supabaseAdmin
-      .from("transactions")
-      .select("amount_gtc")
-      .eq("user_id", user.telegram_id)
-      .eq("kind", "game_reward");
-    const earnedSoFar = (priorGame ?? []).reduce((s, r) => s + Number(r.amount_gtc), 0);
-    const remainingGameCap = Math.max(0, LIFETIME_GAME_CAP - earnedSoFar);
-    if (credited > remainingGameCap) credited = remainingGameCap;
 
     // Total cap across game + referral earnings.
     const { data: priorAll } = await supabaseAdmin
@@ -521,6 +510,7 @@ export const finishGame = createServerFn({ method: "POST" })
     const totalEarned = (priorAll ?? []).reduce((s, r) => s + Math.max(0, Number(r.amount_gtc)), 0);
     const remainingTotalCap = Math.max(0, LIFETIME_TOTAL_CAP - totalEarned);
     if (credited > remainingTotalCap) credited = remainingTotalCap;
+
 
     const newBal = Number(latest?.balance_gtc ?? 0) + credited;
     // Allow current_level to advance to cap+1 (e.g. 101) so the client can
